@@ -1,12 +1,24 @@
 import type { Node, Relation } from '@ysk8hori/typescript-graph';
-import { getConfig, isIncludeIndexFileDependencies } from '../utils/config';
+import { isIncludeIndexFileDependencies } from '../utils/config';
+import type { Context } from '../utils/context';
 import { createIncludeList } from './createIncludeList';
 
 jest.mock('../utils/config', () => ({
   isIncludeIndexFileDependencies: jest.fn(),
 }));
 
-const baseConfig = getConfig();
+const baseConfig: Context["config"] = {
+  tsconfigRoot: './',
+  tsconfig: './tsconfig.json',
+  maxSize: 30,
+  orientation: { TB: true },
+  debugEnabled: false,
+  inDetails: false,
+  exclude: [],
+  includeIndexFileDependencies: false,
+  commentTitle: 'Delta TypeScript Graph Action',
+  showMetrics: false,
+};
 test('新規作成、更新、削除、リネーム前後のファイルが include 対象となる', () => {
   expect(
     createIncludeList({
