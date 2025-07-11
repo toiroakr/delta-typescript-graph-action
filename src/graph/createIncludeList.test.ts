@@ -1,11 +1,12 @@
 import type { Node, Relation } from '@ysk8hori/typescript-graph';
-import { isIncludeIndexFileDependencies } from '../utils/config';
+import { getConfig, isIncludeIndexFileDependencies } from '../utils/config';
 import { createIncludeList } from './createIncludeList';
 
 jest.mock('../utils/config', () => ({
   isIncludeIndexFileDependencies: jest.fn(),
 }));
 
+const baseConfig = getConfig();
 test('新規作成、更新、削除、リネーム前後のファイルが include 対象となる', () => {
   expect(
     createIncludeList({
@@ -40,6 +41,7 @@ test('新規作成、更新、削除、リネーム前後のファイルが incl
             },
           ],
         },
+        config: baseConfig,
       },
       // created: ['created.ts'],
       // deleted: ['deleted.ts'],
@@ -73,6 +75,7 @@ test('TSG_INCLUDE_INDEX_FILE_DEPENDENCIES が false の場合は include 対象�
           ],
           renamed: [],
         },
+        config: baseConfig,
       },
       // created: [],
       // deleted: [],
@@ -126,6 +129,7 @@ test('TSG_INCLUDE_INDEX_FILE_DEPENDENCIES が true の場合は include 対象�
           ],
           renamed: [],
         },
+        config: baseConfig,
       },
       graphs: [
         {
