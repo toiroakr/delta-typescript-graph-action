@@ -25,6 +25,15 @@ export function createIncludeList({
   ]
     .map(filename => path.relative(baseDir, filename))
     .filter(filename => filename && !filename.startsWith('..'));
+  console.log({
+    baseDir,
+    tsconfigRoot,
+    tsconfig,
+    tmp,
+    created, deleted, modified, renamed,
+    isIncludeIndexFileDependencies: isIncludeIndexFileDependencies(),
+    extracted: extractIndexFileDependencies({ graphs, includeFilePaths: tmp }),
+  })
   return isIncludeIndexFileDependencies()
     ? [
         ...tmp,
